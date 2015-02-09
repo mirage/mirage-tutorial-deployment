@@ -1,6 +1,6 @@
 #!/bin/sh -ex
 
-VM=mir-tutorial.xen
+VM=mir-tutorial
 KERNEL=`pwd`/xen/`cat xen/latest`
 sed -e "s,@VM@,$VM,g; s,@KERNEL@,$KERNEL/$VM.xen,g" <xl.conf.in >$KERNEL/xl.conf
 
