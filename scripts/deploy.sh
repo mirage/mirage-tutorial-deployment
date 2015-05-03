@@ -15,7 +15,7 @@
 # PERFORMANCE OF THIS SOFTWARE.
 
 VM=mir-tutorial
-XM=xm
+XM=xl
 
 ROOT=$(git rev-parse --show-toplevel)
 cd $ROOT
