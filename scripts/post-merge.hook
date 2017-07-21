@@ -25,14 +25,16 @@
 # PERFORMANCE OF THIS SOFTWARE.
 
 ## uncomment if necessary when debugging. redirects output to LOG_FILE
-# exec 1<&-
-# exec 2<&-
-# exec 1<>LOG_FILE
-# exec 2>&1
-# echo "LOG: $(date)"
-# echo "ENV: $(env | sort)"
-# echo "PWD: $(pwd)"
-# set -x
+if [[ "$MIRAGE_DEPLOY_DEBUG" == "true" ]]; then
+  exec 1<&-
+  exec 2<&-
+  exec 1<>LOG_FILE
+  exec 2>&1
+  echo "LOG: $(date)"
+  echo "ENV: $(env | sort)"
+  echo "PWD: $(pwd)"
+  set -x
+fi
 
 cd $(dirname "$(readlink -f "$0")") # canonicalise directory
 
