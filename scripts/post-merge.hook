@@ -1,4 +1,4 @@
-#!/bin/sh -eu
+#!/bin/sh -eux
 ### BEGIN INIT INFO
 # Provides:          tutorial.openmirage.org
 # Required-Start:    $local_fs $network $syslog $time
@@ -25,25 +25,24 @@
 # PERFORMANCE OF THIS SOFTWARE.
 
 ## uncomment if necessary when debugging. redirects output to LOG_FILE
-if [ "$MIRAGE_DEPLOY_DEBUG" = "true" ]; then
-  exec 1<&-
-  exec 2<&-
-  exec 1<>LOG_FILE
-  exec 2>&1
-  echo "LOG: $(date)"
-  echo "ENV: $(env | sort)"
-  echo "PWD: $(pwd)"
-  set -x
-fi
+# exec 1<&-
+# exec 2<&-
+# exec 1<>LOG_FILE
+# exec 2>&1
+# echo "LOG: $(date)"
+# echo "ENV: $(env | sort)"
+# echo "PWD: $(pwd)"
+# set -x
 
 cd $(dirname "$(readlink -f "$0")") # canonicalise directory
 
 HTTP=tutorial.openmirage.org
+VM=$(echo $HTTP | sed 's/\.//g')
 
 unset GIT_DIR
 ROOT=$(git rev-parse --show-toplevel)
 KERNEL=$ROOT/xen/$(cat "$ROOT/xen/latest")
 
-if [ -f "$KERNEL/mir-${HTTP}.xen.bz2" ]; then
-    "$ROOT/scripts/deploy.sh" $HTTP
+if [ -f "$KERNEL/${VM}.xen.bz2" ]; then
+    "$ROOT/scripts/deploy.sh" $HTTP $VM
 fi
