@@ -18,19 +18,20 @@
 set -eu
 
 if [ "$#" -ge 3 ]; then
-    echo "usage: $(basename "$0") NAME [DISK]"
+    echo "usage: $(basename "$0") SITENAME VMNAME [DISK]"
     exit 1
 fi
 
 NAME=$1
+VM=$2
 
-if [ "$#" -eq 1 ]; then DISK=""; else DISK=$2; fi
+if [ "$#" -eq 2 ]; then DISK=""; else DISK=$3; fi
 
 ROOT=$(git rev-parse --show-toplevel)
 KERNEL=$ROOT/xen/$(cat "$ROOT/xen/latest")
 
 cd "$ROOT"
 
-sed -e "s,@NAME@,$NAME,g; s,@KERNEL@,$KERNEL/mir-$NAME.xen,g; s:@DISK@:$DISK:g" \
+sed -e "s,@NAME@,$NAME,g; s,@KERNEL@,$KERNEL/$VM.xen,g; s:@DISK@:$DISK:g" \
     < xl.conf.in \
-    >| "$KERNEL/$NAME.xl"
+    >| "$KERNEL/$VM.xl"

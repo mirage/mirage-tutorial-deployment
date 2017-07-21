@@ -17,16 +17,17 @@
 
 cd $(dirname "$(readlink -f "$0")") # canonicalise directory
 
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 2 ]; then
     echo "usage: $(basename "$0") NAME"
     exit 1
 fi
 
 NAME=$1
+VM=$2
 
 ROOT=$(git rev-parse --show-toplevel)
 SCRIPTS=$ROOT/scripts
 
-"$SCRIPTS"/prepare-config.sh "$NAME"
+"$SCRIPTS"/prepare-config.sh "$NAME" "$VM"
 "$SCRIPTS"/destroy-vm.sh "$NAME"
-"$SCRIPTS"/create-vm.sh "$NAME"
+"$SCRIPTS"/create-vm.sh "$VM"
